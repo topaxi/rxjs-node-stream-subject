@@ -2,6 +2,6 @@ sudo: false
 language: node_js
 node_js:
   - "6"
-addons:
-  code_climate:
-    repo_token: 17295e0b0c9ac90eeba176c3c89fab5c06a605223d2bb927249584c5b65de66b
+after_success:
+  - npm install -g codeclimate-test-reporter
+  - CODECLIMATE_REPO_TOKEN=17295e0b0c9ac90eeba176c3c89fab5c06a605223d2bb927249584c5b65de66b codeclimate-test-reporter < coverage/lcov.info
