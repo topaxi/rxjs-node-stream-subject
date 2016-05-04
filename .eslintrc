@@ -1,0 +1,10 @@
+{
+  "extends": "./node_modules/eslint-config-topaxi/eslint.json",
+  "parser": "babel-eslint",
+  "env": {
+    "node": true
+  },
+  "rules": {
+    "no-underscore-dangle": 0
+  }
+}
