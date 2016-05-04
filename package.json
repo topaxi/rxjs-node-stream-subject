@@ -1,6 +1,6 @@
 {
   "name": "rxjs-node-stream-subject",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "RxJS Subject for Node.js streams and sockets",
   "main": "dist/index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/topaxi/rxjs-irc.git"
+    "url": "git+https://github.com/topaxi/rxjs-node-stream-subject.git"
   },
   "keywords": [
     "node",
