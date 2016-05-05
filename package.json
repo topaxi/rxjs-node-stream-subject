@@ -1,6 +1,6 @@
 {
   "name": "rxjs-node-stream-subject",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "RxJS Subject for Node.js streams and sockets",
   "main": "dist/index.js",
   "scripts": {
