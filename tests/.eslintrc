@@ -3,7 +3,7 @@
     "mocha": true
   },
   "globals": {
-    "Mitm": true,
+    "sinon": true,
     "expect": true
   },
   "rules": {

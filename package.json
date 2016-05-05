@@ -43,7 +43,8 @@
     "eslint": "^2.9.0",
     "eslint-config-topaxi": "^1.0.1",
     "glob": "^7.0.3",
-    "mitm": "^1.2.1",
-    "mocha": "^2.4.5"
+    "mocha": "^2.4.5",
+    "sinon": "^1.17.4",
+    "sinon-chai": "^2.8.0"
   }
 }

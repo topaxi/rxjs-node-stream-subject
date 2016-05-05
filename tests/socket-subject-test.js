@@ -1,6 +1,13 @@
 import http from 'http'
 import SocketSubject from '../lib/socket-subject'
 
+function httpGet(path) {
+  this.next(`GET ${path} HTTP/1.1\r\n`)
+  this.next('Host: topaxi.ch\r\n')
+  this.next('Connection: close\r\n')
+  this.next('\r\n')
+}
+
 describe('HTTP', () => {
   let server
 
@@ -14,21 +21,64 @@ describe('HTTP', () => {
     server.listen(8042)
   })
 
+  afterEach(done => {
+    server.close(done)
+  })
+
   it('Should be able to connect to a HTTP server', () => {
-    const s = new SocketSubject({
+    const subject = new SocketSubject({
       host: 'localhost',
       port: 8042
     })
 
-    s.next('GET / HTTP/1.1\r\n')
-    s.next('Host: topaxi.ch\r\n')
-    s.next('Connection: close\r\n')
-    s.next('\r\n')
+    subject::httpGet('/')
 
-    let promise = s.forEach(msg => {
+    let promise = subject.forEach(msg => {
       expect(msg.toString()).to.include('It works!')
     })
 
     return expect(promise).to.be.fulfilled
+  })
+
+  it('Should call the openObserver on connect', () => {
+    const openObserver = {
+      next: sinon.spy()
+    }
+    const subject = new SocketSubject({
+      host: 'localhost',
+      port: 8042,
+      openObserver
+    })
+
+    subject::httpGet('/')
+
+    let promise = subject.forEach(msg => {
+      expect(msg.toString()).to.include('It works!')
+    })
+
+    return expect(promise).to.be.fulfilled.then(() =>
+      expect(openObserver.next).to.have.been.calledOnce
+    )
+  })
+
+  it('Should call the closeObserver after request', () => {
+    const closeObserver = {
+      next: sinon.spy()
+    }
+    const subject = new SocketSubject({
+      host: 'localhost',
+      port: 8042,
+      closeObserver
+    })
+
+    subject::httpGet('/')
+
+    let promise = subject.forEach(msg => {
+      expect(msg.toString()).to.include('It works!')
+    })
+
+    return expect(promise).to.be.fulfilled.then(() =>
+      expect(closeObserver.next).to.have.been.calledOnce
+    )
   })
 })
