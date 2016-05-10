@@ -1,5 +1,6 @@
 import http from 'http'
 import SocketSubject from '../lib/socket-subject'
+import { map } from 'rxjs/operator/map'
 
 function httpGet(path) {
   this.next(`GET ${path} HTTP/1.1\r\n`)
@@ -41,6 +42,24 @@ describe('SocketSubject', () => {
     let promise = subject.forEach(msg => {
       expect(msg.toString()).to.include('It works!')
     })
+
+    return expect(promise).to.be.fulfilled
+  })
+
+  it('Should be able to map server responses', () => {
+    const subject = new SocketSubject({
+      host: 'localhost',
+      port: 8042
+    })
+
+    subject::httpGet('/')
+
+    let promise = subject
+      ::map(buf => buf.toString())
+      ::map(msg => msg.replace('!', ' with map!'))
+      .forEach(msg => {
+        expect(msg).to.include('It works with map!')
+      })
 
     return expect(promise).to.be.fulfilled
   })
