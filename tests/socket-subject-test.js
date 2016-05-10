@@ -8,21 +8,26 @@ function httpGet(path) {
   this.next('\r\n')
 }
 
-describe('HTTP', () => {
+describe('SocketSubject', () => {
   let server
 
-  beforeEach(() => {
+  beforeEach(done => {
     server = http.createServer((req, res) => {
       res.end('It works!')
     })
     server.on('clientError', (err, socket) =>
       socket.end('HTTP/1.1 400 Bad Request\r\n\r\n')
     )
-    server.listen(8042)
+    server.listen(8042, done)
   })
 
   afterEach(done => {
-    server.close(done)
+    if (server.listening) {
+      server.close(done)
+    }
+    else {
+      done()
+    }
   })
 
   it('Should be able to connect to a HTTP server', () => {

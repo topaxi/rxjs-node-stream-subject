@@ -9,6 +9,7 @@
   "rules": {
     "max-len": 0,
     "no-magic-numbers": 0,
-    "handle-callback-err": 0
+    "handle-callback-err": 0,
+    "no-unused-expressions": 0
   }
 }
